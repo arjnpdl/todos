@@ -40,7 +40,7 @@ const createTodo = async (req, res) => {
 const updateTodo = async (req, res) => {
     try {
         const todo = await Todo.findByIdAndUpdate(
-            req.params.id,
+            { _id: { $eq: req.params.id } },
             req.body,
             { new: true, runValidators: true }
         );
@@ -57,7 +57,7 @@ const updateTodo = async (req, res) => {
 
 const deleteTodo = async (req, res) => {
     try {
-        const todo = await Todo.findByIdAndDelete(req.params.id);
+        const todo = await Todo.findByIdAndDelete({ _id: { $eq: req.params.id } });
 
         if (!todo) {
             return res.status(404).json({ message: "Todo not found" });
